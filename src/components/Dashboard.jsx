@@ -137,6 +137,39 @@ const Dashboard = ({ language = 'en', onNavigate }) => {
               </svg>
             </motion.div>
           )}
+          {mockFarmData.climateRisk === 'warning' && mockFarmData.riskDetails && (
+            <motion.div
+              className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="flex items-start space-x-3">
+                <AlertTriangle className="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-yellow-800 burmese-text leading-relaxed mb-1">
+                    {language === 'my' ? mockFarmData.riskDetails.titleMy || t.floodRiskDetails : mockFarmData.riskDetails.title}
+                  </h3>
+                  <p className="text-sm text-yellow-700 font-normal burmese-text leading-relaxed mb-2">
+                    {language === 'my' ? mockFarmData.riskDetails.descriptionMy || t.floodRiskDesc : mockFarmData.riskDetails.description}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-yellow-600">
+                    <span className="font-normal burmese-text leading-relaxed">
+                      {language === 'my' ? 'မျှော်မှန်းချိန်:' : 'Expected:'} {mockFarmData.riskDetails.expectedTime}
+                    </span>
+                    <span className="font-normal burmese-text leading-relaxed">
+                      {language === 'my' ? 'အဆင့်:' : 'Severity:'} {mockFarmData.riskDetails.severity}
+                    </span>
+                  </div>
+                  <div className="mt-2 p-2 bg-yellow-100 rounded-lg">
+                    <p className="text-xs text-yellow-800 font-normal burmese-text leading-relaxed">
+                      {language === 'my' ? mockFarmData.riskDetails.actionMy || t.floodRiskAction : mockFarmData.riskDetails.action}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
           <div className="flex items-center justify-center">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow mr-2"></div>
             <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed">{t.lastSync}</p>

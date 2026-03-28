@@ -43,6 +43,12 @@ export const translations = {
     securityPrivacy: 'Security & Privacy',
     sslEncryption: 'SSL Encryption',
     partnerVerification: 'Partner Verification',
+    floodRiskDetails: 'Flood Risk Alert',
+    floodRiskDesc: 'Heavy rainfall expected in your area. Rivers may overflow.',
+    floodRiskAction: 'Prepare emergency supplies and monitor water levels.',
+    droughtRiskDetails: 'Drought Risk Alert',
+    droughtRiskDesc: 'Extended dry period detected. Water conservation recommended.',
+    droughtRiskAction: 'Implement water-saving irrigation techniques.',
   },
   my: {
     dashboard: 'ဒက်ရှ်ဘုတ်',
@@ -87,6 +93,12 @@ export const translations = {
     securityPrivacy: 'လုံခြုံရေး နှင့် ကိုယ်ရေးလုံခြုံရေး',
     sslEncryption: 'SSL ကုဒ်ဖြင့် လုံခြုံရေး',
     partnerVerification: 'မိတ်ဖက် အတည်ပြုခြင်း',
+    floodRiskDetails: 'ရေကြီးအန္တရာယ် သတိပေးချက်',
+    floodRiskDesc: 'သင့်ဒေသ၌ မိုးသည်းထန်စွာ ရွာသွန်းနိုင်သည်။ မြစ်များ ရေလွှမ်းမိုးနိုင်သည်။',
+    floodRiskAction: 'အရေးပေါ် ကုန်စုံများကို ပြင်ဆင်ထားပြီး ရေမျက်နှာပြင်ကို စောင့်ကြည့်ပါ။',
+    droughtRiskDetails: 'ရေခန်းခြောက်သွေ့မှု အန္တရာယ် သတိပေးချက်',
+    droughtRiskDesc: 'ရေခန်းခြောက်သွေ့မှု ကာလရှည် တွေ့ရှိခဲ့သည်။ ရေသိမ်းဆည်းခြင်း အကြံပြုသည်။',
+    droughtRiskAction: 'ရေသိမ်းဆည်းနည်းလမ်းများကို အကောင်အထည်ဖော်ပါ။',
   },
 };
 
@@ -106,6 +118,17 @@ export const insuranceStatuses = {
 export const mockFarmData = {
   climateRisk: 'warning', // safe, warning, critical
   lastSync: '2 minutes ago',
+  riskDetails: {
+    type: 'flood',
+    title: 'Flood Risk Alert',
+    titleMy: 'ရေကြီးအန္တရာယ် သတိပေးချက်',
+    description: 'Heavy rainfall expected in your area. Rivers may overflow.',
+    descriptionMy: 'သင့်ဒေသ၌ မိုးသည်းထန်စွာ ရွာသွန်းနိုင်သည်။ မြစ်များ ရေလွှမ်းမိုးနိုင်သည်။',
+    action: 'Prepare emergency supplies and monitor water levels.',
+    actionMy: 'အရေးပေါ် ကုန်စုံများကို ပြင်ဆင်ထားပြီး ရေမျက်နှာပြင်ကို စောင့်ကြည့်ပါ။',
+    severity: 'moderate',
+    expectedTime: '24-48 hours',
+  },
   weatherData: {
     currentRainfall: 450, // mm
     temperature: 28, // C
@@ -258,12 +281,12 @@ export const insuranceMonitoring = {
     {
       name: 'Myanmar Insurance Corporation',
       verified: true,
-      logo: 'https://via.placeholder.com/50',
+      icon: 'Shield',
     },
     {
       name: 'AgriProtect Myanmar',
       verified: true,
-      logo: 'https://via.placeholder.com/50',
+      icon: 'Building',
     },
   ],
 };

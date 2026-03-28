@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Eye, Zap, Banknote, CheckCircle, Clock, AlertCircle, MapPin, Wifi, Lock, Users } from 'lucide-react';
+import { Shield, Eye, Zap, Banknote, CheckCircle, Clock, AlertCircle, MapPin, Wifi, Lock, Users, Building } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { translations, mockFarmData, insuranceStatuses, insuranceMonitoring } from '../mockData';
 import { useAppContext } from '../AppContext';
@@ -35,6 +35,18 @@ const InsuranceHub = ({ language = 'en' }) => {
       case 'completed': return <CheckCircle className="w-5 h-5" />;
       case 'current': return <Clock className="w-5 h-5 animate-pulse" />;
       default: return <div className="w-5 h-5 rounded-full border-2 border-current"></div>;
+    }
+  };
+
+  const renderPartnerIcon = (iconName) => {
+    const iconProps = { className: "w-8 h-8 text-emerald-600" };
+    switch (iconName) {
+      case 'Shield':
+        return <Shield {...iconProps} />;
+      case 'Building':
+        return <Building {...iconProps} />;
+      default:
+        return <Shield {...iconProps} />;
     }
   };
 
@@ -105,7 +117,7 @@ const InsuranceHub = ({ language = 'en' }) => {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <div className="flex items-center space-x-3">
-                  <img src={partner.logo} alt={partner.name} className="w-8 h-8 rounded-lg" />
+                  {renderPartnerIcon(partner.icon)}
                   <span className="font-semibold burmese-text leading-relaxed">{partner.name}</span>
                 </div>
                 <div className="flex items-center">
