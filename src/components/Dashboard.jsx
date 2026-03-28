@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cloud, Shield, Camera, MessageCircle, TrendingUp, AlertTriangle, CheckCircle, CreditCard, Calendar } from 'lucide-react';
+import { Cloud, Shield, Camera, MessageCircle, TrendingUp, AlertTriangle, CheckCircle, CreditCard, Calendar, BookOpen, Wind } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { translations, mockFarmData, subscriptionData } from '../mockData';
 import { useAppContext } from '../AppContext';
@@ -59,10 +59,13 @@ const Dashboard = ({ language = 'en', onNavigate }) => {
       <div className="max-w-md mx-auto space-y-6">
         {/* Trust Banner */}
         <motion.div
-          className="bg-emerald-600 text-white p-3 rounded-3xl text-center font-semibold burmese-text leading-relaxed"
+          className="bg-emerald-600 text-white p-4 rounded-3xl text-center font-semibold burmese-text leading-relaxed shadow-umbra"
           variants={itemVariants}
         >
-          {t.trustBanner}
+          <div className="flex items-center justify-center space-x-2">
+            <Shield className="w-5 h-5" />
+            <span>{t.trustBanner}</span>
+          </div>
         </motion.div>
 
         {/* Renewal Notification */}
@@ -88,115 +91,150 @@ const Dashboard = ({ language = 'en', onNavigate }) => {
 
         {/* Subscription Ledger */}
         <motion.div
-          className="bg-white/80 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-umbra"
+          className="bg-white/90 backdrop-blur-md border border-white/30 p-6 rounded-3xl shadow-umbra"
           variants={itemVariants}
         >
-          <h2 className="text-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t.subscriptionLedger}</h2>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">{t.nextPayment}:</span>
-              <span className="font-semibold burmese-text leading-relaxed">{subscriptionState.nextPayment.date}</span>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <CreditCard className="w-6 h-6 text-emerald-600" />
+              <h2 className="text-fluid-lg font-semibold tracking-tight burmese-text leading-relaxed">{t.subscriptionLedger}</h2>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">{t.premiumAmount}:</span>
-              <span className="font-semibold burmese-text leading-relaxed">{subscriptionState.nextPayment.amount.toLocaleString()} MMK</span>
+            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+              subscriptionState.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-yellow-100 text-yellow-800'
+            }`}>
+              {subscriptionState.status}
             </div>
-            <div className="flex justify-between items-center">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">{t.coverageStatus}:</span>
-              <span className="font-semibold text-emerald-600 burmese-text leading-relaxed">{subscriptionState.coverageStatus}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-slate-50 p-4 rounded-2xl">
+              <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed mb-1">{t.nextPayment}</p>
+              <p className="text-lg font-semibold burmese-text leading-relaxed">{subscriptionState.nextPayment.date}</p>
+            </div>
+            <div className="bg-slate-50 p-4 rounded-2xl">
+              <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed mb-1">{t.premiumAmount}</p>
+              <p className="text-lg font-semibold burmese-text leading-relaxed">{subscriptionState.nextPayment.amount.toLocaleString()} MMK</p>
+            </div>
+          </div>
+          <div className="mt-4 p-3 bg-emerald-50 rounded-2xl border border-emerald-200">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-emerald-800 burmese-text leading-relaxed">{t.coverageStatus}</span>
+              <span className="text-sm font-semibold text-emerald-600 burmese-text leading-relaxed">{subscriptionState.coverageStatus}</span>
             </div>
           </div>
         </motion.div>
 
-        {/* Climate Risk Level */}
+        {/* Climate Risk Assessment */}
         <motion.div
-          className="bg-white/80 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-umbra"
+          className="bg-white/90 backdrop-blur-md border border-white/30 p-6 rounded-3xl shadow-umbra"
           variants={itemVariants}
         >
-          <h2 className="text-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t.climateRisk}</h2>
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            {getRiskIcon(mockFarmData.climateRisk)}
-            <span className={`text-2xl font-bold ${getRiskColor(mockFarmData.climateRisk)}`}>
-              {t[mockFarmData.climateRisk]}
-            </span>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <Cloud className="w-6 h-6 text-emerald-600" />
+              <h2 className="text-lg font-bold burmese-text leading-relaxed">{t.climateRisk}</h2>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'လက်ရှိ' : 'Live'}</span>
+            </div>
           </div>
-          {mockFarmData.climateRisk === 'safe' && (
-            <motion.div
-              className="flex justify-center mb-4"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: 'spring' }}
-            >
-              <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 40 Q30 20 40 30 Q50 40 60 30 Q70 20 80 30 Q90 40 100 30" stroke="#059669" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                <circle cx="30" cy="35" r="3" fill="#059669" opacity="0.7"/>
-                <circle cx="50" cy="25" r="2" fill="#059669" opacity="0.5"/>
-                <circle cx="70" cy="35" r="4" fill="#059669" opacity="0.8"/>
-                <circle cx="90" cy="25" r="2.5" fill="#059669" opacity="0.6"/>
-                <path d="M15 50 L25 45 L35 50 L45 45 L55 50 L65 45 L75 50 L85 45 L95 50 L105 45" stroke="#10b981" strokeWidth="2" fill="none" opacity="0.4"/>
-              </svg>
-            </motion.div>
-          )}
-          {mockFarmData.climateRisk === 'warning' && mockFarmData.riskDetails && (
-            <motion.div
-              className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="flex items-start space-x-3">
-                <AlertTriangle className="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-yellow-800 burmese-text leading-relaxed mb-1">
-                    {language === 'my' ? mockFarmData.riskDetails.titleMy || t.floodRiskDetails : mockFarmData.riskDetails.title}
-                  </h3>
-                  <p className="text-sm text-yellow-700 font-normal burmese-text leading-relaxed mb-2">
-                    {language === 'my' ? mockFarmData.riskDetails.descriptionMy || t.floodRiskDesc : mockFarmData.riskDetails.description}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-yellow-600">
-                    <span className="font-normal burmese-text leading-relaxed">
-                      {language === 'my' ? 'မျှော်မှန်းချိန်:' : 'Expected:'} {mockFarmData.riskDetails.expectedTime}
-                    </span>
-                    <span className="font-normal burmese-text leading-relaxed">
-                      {language === 'my' ? 'အဆင့်:' : 'Severity:'} {mockFarmData.riskDetails.severity}
-                    </span>
-                  </div>
-                  <div className="mt-2 p-2 bg-yellow-100 rounded-lg">
-                    <p className="text-xs text-yellow-800 font-normal burmese-text leading-relaxed">
-                      {language === 'my' ? mockFarmData.riskDetails.actionMy || t.floodRiskAction : mockFarmData.riskDetails.action}
-                    </p>
-                  </div>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <Cloud className="w-5 h-5 text-emerald-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'မိုးရွာနိုင်ခြေ' : 'Rain Probability'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'နောက် ၃ ရက်' : 'Next 3 days'}</p>
                 </div>
               </div>
-            </motion.div>
-          )}
-          <div className="flex items-center justify-center">
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow mr-2"></div>
-            <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed">{t.lastSync}</p>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-emerald-600">85%</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'မြင့်မား' : 'High'}</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-amber-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'အပူချိန်' : 'Temperature'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ယနေ့' : 'Today'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-amber-600">32°C</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'သာမာန်' : 'Normal'}</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <Wind className="w-5 h-5 text-blue-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'လေတိုက်နှုန်း' : 'Wind Speed'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ယနေ့' : 'Today'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-blue-600">15 km/h</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'သာမာန်' : 'Normal'}</p>
+              </div>
+            </div>
           </div>
         </motion.div>
 
         {/* Live Farm Status */}
         <motion.div
-          className="bg-white/80 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-umbra"
+          className="bg-white/90 backdrop-blur-md border border-white/30 p-6 rounded-3xl shadow-umbra"
           variants={itemVariants}
         >
-          <h2 className="text-lg font-semibold mb-4 flex items-center tracking-tight burmese-text leading-relaxed">
-            <Cloud className="w-5 h-5 mr-2" />
-            {t.liveFarmStatus}
-          </h2>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">Rainfall:</span>
-              <span className="font-semibold">{mockFarmData.weatherData.currentRainfall} mm</span>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <Cloud className="w-6 h-6 text-emerald-600" />
+              <h2 className="text-lg font-bold burmese-text leading-relaxed">{t.liveFarmStatus}</h2>
             </div>
-            <div className="flex justify-between">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">Temperature:</span>
-              <span className="font-semibold">{mockFarmData.weatherData.temperature}°C</span>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'လက်ရှိ' : 'Live'}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="font-normal text-slate-600 burmese-text leading-relaxed">Humidity:</span>
-              <span className="font-semibold">{mockFarmData.weatherData.humidity}%</span>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <Cloud className="w-5 h-5 text-blue-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'မိုးရေချိန်' : 'Rainfall'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ယနေ့' : 'Today'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-blue-600">{mockFarmData.weatherData.currentRainfall} mm</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'သာမာန်' : 'Normal'}</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-amber-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'အပူချိန်' : 'Temperature'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ယနေ့' : 'Today'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-amber-600">{mockFarmData.weatherData.temperature}°C</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'သာမာန်' : 'Normal'}</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-2xl">
+              <div className="flex items-center space-x-3">
+                <Wind className="w-5 h-5 text-emerald-600" />
+                <div>
+                  <p className="font-semibold burmese-text leading-relaxed">{language === 'my' ? 'စိုထိုင်းဆ' : 'Humidity'}</p>
+                  <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ယနေ့' : 'Today'}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-emerald-600">{mockFarmData.weatherData.humidity}%</p>
+                <p className="text-sm text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'သာမာန်' : 'Normal'}</p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -204,18 +242,18 @@ const Dashboard = ({ language = 'en', onNavigate }) => {
         {/* Quick Actions */}
         <motion.div className="grid grid-cols-2 gap-4" variants={itemVariants}>
           <motion.button
-            className="bg-emerald-600 text-white p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-20"
+            className="bg-emerald-600 text-white p-6 rounded-3xl shadow-umbra flex flex-col items-center space-y-3 h-24 hover:bg-emerald-700 transition-colors"
             whileTap={{ scale: 0.98 }}
           >
             <Camera className="w-8 h-8" />
-            <span className="font-semibold burmese-text leading-relaxed">{t.scanCropDisease}</span>
+            <span className="font-semibold burmese-text leading-relaxed text-center">{t.scanCropDisease}</span>
           </motion.button>
           <motion.button
-            className="bg-slate-600 text-white p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-20"
+            className="bg-slate-600 text-white p-6 rounded-3xl shadow-umbra flex flex-col items-center space-y-3 h-24 hover:bg-slate-700 transition-colors"
             whileTap={{ scale: 0.98 }}
           >
             <MessageCircle className="w-8 h-8" />
-            <span className="font-semibold burmese-text leading-relaxed">{t.askExpert}</span>
+            <span className="font-semibold burmese-text leading-relaxed text-center">{t.askExpert}</span>
           </motion.button>
         </motion.div>
 
@@ -223,27 +261,30 @@ const Dashboard = ({ language = 'en', onNavigate }) => {
         <motion.div className="grid grid-cols-3 gap-4" variants={itemVariants}>
           <motion.button
             onClick={() => onNavigate('insurance')}
-            className="bg-white/80 backdrop-blur-md border border-white/20 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-20"
+            className="bg-white/90 backdrop-blur-md border border-white/30 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-24 hover:shadow-lg transition-shadow"
             whileTap={{ scale: 0.98 }}
           >
-            <Shield className="w-6 h-6 text-emerald-600" />
-            <span className="text-sm font-semibold burmese-text leading-relaxed">{t.smartInsurance}</span>
+            <Shield className="w-7 h-7 text-emerald-600" />
+            <span className="text-sm font-semibold burmese-text leading-relaxed text-center">{t.smartInsurance}</span>
+            <span className="text-xs text-slate-600 font-normal burmese-text leading-relaxed text-center">{language === 'my' ? 'အာမခံခြင်း' : 'Protection'}</span>
           </motion.button>
           <motion.button
             onClick={() => onNavigate('academy')}
-            className="bg-white/80 backdrop-blur-md border border-white/20 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-20"
+            className="bg-white/90 backdrop-blur-md border border-white/30 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-24 hover:shadow-lg transition-shadow"
             whileTap={{ scale: 0.98 }}
           >
-            <Cloud className="w-6 h-6 text-emerald-600" />
-            <span className="text-sm font-semibold burmese-text leading-relaxed">{t.knowledgeAcademy}</span>
+            <BookOpen className="w-7 h-7 text-emerald-600" />
+            <span className="text-sm font-semibold burmese-text leading-relaxed text-center">{t.knowledgeAcademy}</span>
+            <span className="text-xs text-slate-600 font-normal burmese-text leading-relaxed text-center">{language === 'my' ? 'လေ့လာရန်' : 'Learn'}</span>
           </motion.button>
           <motion.button
             onClick={() => onNavigate('market')}
-            className="bg-white/80 backdrop-blur-md border border-white/20 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-20"
+            className="bg-white/90 backdrop-blur-md border border-white/30 p-4 rounded-3xl shadow-umbra flex flex-col items-center space-y-2 h-24 hover:shadow-lg transition-shadow"
             whileTap={{ scale: 0.98 }}
           >
-            <TrendingUp className="w-6 h-6 text-emerald-600" />
-            <span className="text-sm font-semibold burmese-text leading-relaxed">{t.marketConnection}</span>
+            <TrendingUp className="w-7 h-7 text-emerald-600" />
+            <span className="text-sm font-semibold burmese-text leading-relaxed text-center">{t.marketConnection}</span>
+            <span className="text-xs text-slate-600 font-normal burmese-text leading-relaxed text-center">{language === 'my' ? 'ရောင်းချရန်' : 'Sell'}</span>
           </motion.button>
         </motion.div>
       </div>
