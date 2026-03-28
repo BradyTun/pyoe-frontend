@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Burmese Unicode Support */
+.burmese-text {
+  word-break: keep-all;
+  line-height: 1.6;
+}
