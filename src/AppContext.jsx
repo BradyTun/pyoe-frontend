@@ -14,15 +14,12 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }) => {
   const [subscriptionState, setSubscriptionState] = useState(subscriptionData);
   const [insuranceState, setInsuranceState] = useState(insuranceMonitoring);
-  const [language, setLanguage] = useState('en');
 
   const value = {
     subscriptionState,
     setSubscriptionState,
     insuranceState,
     setInsuranceState,
-    language,
-    setLanguage,
   };
 
   return (

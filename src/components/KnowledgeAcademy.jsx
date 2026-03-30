@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BookOpen, Camera, Scan, Search, Tag, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { translations, cropRecommendations, academyPosts, diseaseDatabase } from '../mockData';
-import { useAppContext } from '../AppContext';
+import { cropRecommendations, academyPosts, diseaseDatabase } from '../mockData';
 
-const KnowledgeAcademy = ({ language = 'en' }) => {
-  const { language: appLanguage } = useAppContext();
-  const t = translations[language];
+const KnowledgeAcademy = () => {
+  const { t, i18n } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const filteredPosts = academyPosts.filter(post => {
-    const matchesSearch = (language === 'my' ? post.titleMy : post.title).toLowerCase().includes(searchTerm.toLowerCase());
+    const title = i18n.language === 'my' ? post.titleMy : post.title;
+    const matchesSearch = title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const categories = [
-    { key: 'all', label: 'All', labelMy: 'အားလုံး' },
-    { key: 'Climate', label: 'Climate', labelMy: 'ရာသီဥတု' },
-    { key: 'MarketTrends', label: 'Market Trends', labelMy: 'စျေးကွက်လမ်းကြောင်းများ' },
-    { key: 'SuccessStories', label: 'Success Stories', labelMy: 'အောင်မြင်မှုဇာတ်လမ်းများ' },
+    { key: 'all', labelKey: 'all' },
+    { key: 'Climate', labelKey: 'climate' },
+    { key: 'MarketTrends', labelKey: 'marketTrends' },
+    { key: 'SuccessStories', labelKey: 'successStories' },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-50 to-emerald-50 p-4">
+    <div className="p-4">
       <div className="max-w-md mx-auto space-y-6">
         {/* Header */}
         <motion.div
@@ -35,13 +35,13 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
         >
           <h1 className="text-fluid-xl font-semibold flex items-center tracking-tight burmese-text leading-relaxed">
             <BookOpen className="w-6 h-6 mr-2 text-emerald-600" />
-            {t.knowledgeAcademy}
+            {t('knowledgeAcademy')}
           </h1>
         </motion.div>
 
         {/* Search and Filter */}
         <motion.div
-          className="bg-white/80 backdrop-blur-md border border-white/20 p-4 rounded-3xl shadow-umbra"
+          className="bg-white/60 backdrop-blur-lg border border-white/30 p-4 rounded-3xl shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -50,7 +50,7 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
             <Search className="absolute left-3 top-3 w-5 h-5 text-slate-600" />
             <input
               type="text"
-              placeholder={language === 'my' ? 'ရှာဖွေရန်...' : 'Search articles...'}
+              placeholder={t('searchArticles')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 burmese-text leading-relaxed"
@@ -67,7 +67,7 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
                     : 'bg-slate-100 text-slate-600'
                 }`}
               >
-                {language === 'my' ? category.labelMy : category.label}
+                {t(category.labelKey)}
               </button>
             ))}
           </div>
@@ -80,27 +80,27 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="text-fluid-lg font-semibold tracking-tight burmese-text leading-relaxed">{t.blogFeed}</h2>
+          <h2 className="text-fluid-lg font-semibold tracking-tight burmese-text leading-relaxed">{t('blogFeed')}</h2>
           {filteredPosts.map((post, index) => (
             <motion.div
               key={post.id}
-              className="bg-white/80 backdrop-blur-md border border-white/20 p-4 rounded-3xl shadow-umbra"
+              className="bg-white/60 backdrop-blur-lg border border-white/30 p-4 rounded-3xl shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <img src={post.thumbnail} alt={language === 'my' ? post.titleMy : post.title} className="w-full h-32 object-cover rounded-xl mb-3" />
+              <img src={post.thumbnail} alt={i18n.language === 'my' ? post.titleMy : post.title} className="w-full h-32 object-cover rounded-xl mb-3" />
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-lg font-normal burmese-text leading-relaxed">
-                  #{language === 'my' ? post.categoryMy : post.category}
+                  #{i18n.language === 'my' ? post.categoryMy : post.category}
                 </span>
                 <div className="flex items-center text-xs text-slate-600 font-normal burmese-text leading-relaxed">
                   <Clock className="w-3 h-3 mr-1" />
-                  {post.readTime} {t.readTime}
+                  {post.readTime} {t('readTime')}
                 </div>
               </div>
-              <h3 className="font-semibold text-lg mb-2 burmese-text leading-relaxed">{language === 'my' ? post.titleMy : post.title}</h3>
-              <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed">{language === 'my' ? post.excerptMy : post.excerpt}</p>
+              <h3 className="font-semibold text-lg mb-2 burmese-text leading-relaxed">{i18n.language === 'my' ? post.titleMy : post.title}</h3>
+              <p className="text-sm text-slate-600 font-normal burmese-text leading-relaxed">{i18n.language === 'my' ? post.excerptMy : post.excerpt}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -112,7 +112,7 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h2 className="text-fluid-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t.diseaseDatabase}</h2>
+          <h2 className="text-fluid-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t('diseaseDatabase')}</h2>
           <div className="space-y-4">
             {diseaseDatabase.map((disease, index) => (
               <motion.div
@@ -122,15 +122,15 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <h3 className="font-semibold mb-2 burmese-text leading-relaxed">{language === 'my' ? disease.nameMy : disease.name}</h3>
+                <h3 className="font-semibold mb-2 burmese-text leading-relaxed">{i18n.language === 'my' ? disease.nameMy : disease.name}</h3>
                 <div className="space-y-2 text-sm">
                   <div>
-                    <span className="font-normal text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'လက္ခဏာများ:' : 'Symptoms:'}</span>
-                    <p className="font-normal burmese-text leading-relaxed">{language === 'my' ? disease.symptomsMy : disease.symptoms}</p>
+                    <span className="font-normal text-slate-600 burmese-text leading-relaxed">{t('symptoms')}</span>
+                    <p className="font-normal burmese-text leading-relaxed">{i18n.language === 'my' ? disease.symptomsMy : disease.symptoms}</p>
                   </div>
                   <div>
-                    <span className="font-normal text-slate-600 burmese-text leading-relaxed">{language === 'my' ? 'ကုသမှု:' : 'Treatment:'}</span>
-                    <p className="font-normal burmese-text leading-relaxed">{language === 'my' ? disease.treatmentMy : disease.treatment}</p>
+                    <span className="font-normal text-slate-600 burmese-text leading-relaxed">{t('treatment')}</span>
+                    <p className="font-normal burmese-text leading-relaxed">{i18n.language === 'my' ? disease.treatmentMy : disease.treatment}</p>
                   </div>
                 </div>
               </motion.div>
@@ -147,7 +147,7 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
         >
           <h2 className="text-fluid-lg font-semibold mb-4 flex items-center tracking-tight burmese-text leading-relaxed">
             <Camera className="w-5 h-5 mr-2" />
-            {t.aiDiagnosis}
+            {t('aiDiagnosis')}
           </h2>
           <div className="relative bg-gray-100 rounded-3xl h-64 flex items-center justify-center overflow-hidden">
             <motion.div
@@ -157,13 +157,13 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
               transition={{ duration: 0.5 }}
             >
               <Scan className="w-16 h-16 mx-auto text-emerald-600 mb-4" />
-              <p className="text-gray-600 font-normal burmese-text leading-relaxed">{language === 'my' ? 'ပင်ကို စကင်ဖတ်ရန် ကင်မရာကို ညွှန်ပါ' : 'Point camera at crop to scan'}</p>
+              <p className="text-gray-600 font-normal burmese-text leading-relaxed">{t('pointCamera')}</p>
               <div className="mt-4 flex justify-center space-x-2">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow"></div>
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow" style={{ animationDelay: '0.2s' }}></div>
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping-slow" style={{ animationDelay: '0.4s' }}></div>
               </div>
-              <p className="text-sm text-emerald-600 mt-2 font-normal burmese-text leading-relaxed">{language === 'my' ? 'စကင်ဖတ်နေသည်...' : 'Scanning...'}</p>
+              <p className="text-sm text-emerald-600 mt-2 font-normal burmese-text leading-relaxed">{t('scanning')}</p>
             </motion.div>
             {/* Viewfinder overlay */}
             <div className="absolute inset-4 border-2 border-emerald-500 rounded-lg pointer-events-none animate-pulse"></div>
@@ -177,7 +177,7 @@ const KnowledgeAcademy = ({ language = 'en' }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <h2 className="text-fluid-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t.cropRecommendations}</h2>
+          <h2 className="text-fluid-lg font-semibold mb-4 tracking-tight burmese-text leading-relaxed">{t('cropRecommendations')}</h2>
           <div className="grid grid-cols-2 gap-4">
             {cropRecommendations.map((crop, index) => (
               <motion.div

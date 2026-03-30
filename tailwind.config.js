@@ -7,26 +7,26 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Sora', 'sans-serif'],
-      },
-      fontSize: {
-        'fluid-sm': 'clamp(0.875rem, 2.5vw, 1rem)',
-        'fluid-base': 'clamp(1rem, 3vw, 1.125rem)',
-        'fluid-lg': 'clamp(1.125rem, 3.5vw, 1.25rem)',
-        'fluid-xl': 'clamp(1.25rem, 4vw, 1.5rem)',
-        'fluid-2xl': 'clamp(1.5rem, 5vw, 2rem)',
-        'fluid-3xl': 'clamp(2rem, 6vw, 2.5rem)',
-      },
-      colors: {
-        primary: '#059669', // Emerald 600
-        surface: '#F0FDF4', // Green 50
-        accent: {
-          dark: '#166534', // Green 800
-          warning: '#FACC15', // Warning Yellow
-        },
+        sans: ['Inter', 'sans-serif'],
+        burmese: ['Poppins', 'sans-serif'],
       },
       boxShadow: {
+        'soft': '0 4px 12px rgba(0, 0, 0, 0.05)',
+        'lifted': '0 10px 25px rgba(0, 0, 0, 0.07), 0 5px 10px rgba(0, 0, 0, 0.04)',
         'umbra': '0 8px 30px rgb(0 0 0 / 0.04)',
+      },
+      colors: {
+        'primary': '#059669', // Emerald 600
+        'secondary': '#f5f5f5',
+        'surface': '#F0FDF4', // Green 50
+        'accent': {
+          'dark': '#166534', // Green 800
+          'warning': '#FACC15', // Warning Yellow
+          'success': '#22c55e',
+          'danger': '#ef4444',
+        },
+        'text-main': '#333333',
+        'text-light': '#666666',
       },
       animation: {
         'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
