@@ -293,6 +293,14 @@ const Dashboard = ({ onNavigate }) => {
           </div>
         </motion.div>
 
+        {/* Ad Banner Placeholder */}
+        <motion.div
+          className="bg-gray-200 p-6 rounded-2xl shadow-soft flex items-center justify-center"
+          variants={itemVariants}
+        >
+          <p className="text-gray-500 font-semibold">Advertisement Banner</p>
+        </motion.div>
+
         {/* Quick Actions */}
         <motion.div className="grid grid-cols-2 gap-4" variants={itemVariants}>
           <motion.button
