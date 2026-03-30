@@ -9,10 +9,10 @@ const MarketConnection = () => {
 
   return (
     <div className="p-4">
-      <div className="max-w-md mx-auto space-y-6">
+      <div className="max-w-md mx-auto space-y-6 md:max-w-6xl">
         {/* Header */}
         <motion.div
-          className="bg-white/80 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-umbra"
+          className="bg-white/80 backdrop-blur-md border border-white/20 p-4 md:p-6 rounded-2xl shadow-umbra"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

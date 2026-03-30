@@ -14,12 +14,15 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }) => {
   const [subscriptionState, setSubscriptionState] = useState(subscriptionData);
   const [insuranceState, setInsuranceState] = useState(insuranceMonitoring);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const value = {
     subscriptionState,
     setSubscriptionState,
     insuranceState,
     setInsuranceState,
+    isLoggedIn,
+    setIsLoggedIn,
   };
 
   return (

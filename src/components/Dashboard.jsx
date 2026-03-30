@@ -57,14 +57,14 @@ const Dashboard = ({ onNavigate }) => {
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-md mx-auto space-y-6">
+      <div className="max-w-md mx-auto space-y-6 md:max-w-6xl">
         {/* Trust Banner */}
         <motion.div
-          className="bg-primary text-white p-4 rounded-2xl text-center font-medium burmese-text leading-relaxed shadow-soft"
+          className="bg-primary text-white p-4 md:p-6 rounded-2xl text-center font-medium burmese-text leading-relaxed shadow-soft"
           variants={itemVariants}
         >
           <div className="flex items-center justify-center space-x-2">
-            <Shield className="w-5 h-5" />
+            <Shield className="w-5 h-5 md:w-6 md:h-6" />
             <span>{t('trustBanner')}</span>
           </div>
         </motion.div>
@@ -129,7 +129,7 @@ const Dashboard = ({ onNavigate }) => {
             </div>
 
             {/* Payment Info Cards */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-4 mb-6 md:grid-cols-2">
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-5 rounded-2xl">
                 <div className="flex items-center space-x-3 mb-2">
                   <Calendar className="w-5 h-5 text-white" />

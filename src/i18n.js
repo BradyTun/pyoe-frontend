@@ -12,7 +12,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     debug: true,
-    fallbackLng: 'en',
+    fallbackLng: 'my',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
@@ -23,6 +23,7 @@ i18n
           insurance: 'Insurance',
           academy: 'Academy',
           market: 'Market',
+          profile: 'Profile',
           climateRisk: 'Climate Risk Level',
           safe: 'Safe',
           warning: 'Warning',
@@ -98,6 +99,7 @@ i18n
           insurance: 'အာမခံ',
           academy: 'ဗဟုသုတ',
           market: 'ဈေးကွက်',
+          profile: 'ပရိုဖိုင်',
           live: 'တိုက်ရိုက်',
           active: 'အသက်ဝင်နေသည်',
           today: 'ယနေ့',
@@ -180,6 +182,26 @@ i18n
           emergencySell: 'အရေးပေါ် ရောင်းချရန်',
           pointCamera: 'သီးနှံကို စစ်ဆေးရန် ကင်မရာဖြင့်ချိန်ရွယ်ပါ',
           scanning: 'စစ်ဆေးနေသည်...',
+
+          // Profile
+          personalInformation: 'ကိုယ်ရေးအချက်အလက်',
+          updatePersonalDetails: 'သင်၏ ကိုယ်ရေးအချက်အလက်များကို ပြင်ဆင်ရန်',
+          accountSettings: 'အကောင့်ဆက်တင်များ',
+          manageAccountPreferences: 'သင်၏အကောင့် နှစ်သက်မှုများကို စီမံခန့်ခွဲရန်',
+          securityPrivacyProfile: 'လုံခြုံရေးနှင့် ကိုယ်ရေးကိုယ်တာ',
+          passwordPrivacySettings: 'စကားဝှက်၊ ကိုယ်ရေးကိုယ်တာ ဆက်တင်များ',
+          paymentMethods: 'ငွေပေးချေမှုနည်းလမ်းများ',
+          managePaymentOptions: 'ငွေပေးချေမှု ရွေးချယ်စရာများကို စီမံခန့်ခွဲရန်',
+          notifications: 'အသိပေးချက်များ',
+          customizeAlerts: 'သင်၏ သတိပေးချက်များကို စိတ်ကြိုက်ပြင်ဆင်ရန်',
+          helpSupport: 'အကူအညီနှင့် ပံ့ပိုးမှု',
+          getHelpContactSupport: 'အကူအညီရယူပြီး ပံ့ပိုးကူညီရေးဌာနသို့ ဆက်သွယ်ရန်',
+          farmSize: 'ခြံအရွယ်အစား',
+          memberSince: 'အဖွဲ့ဝင်ဖြစ်သည့်အချိန်',
+          riskLevel: 'အန္တရာယ်အဆင့်',
+          premiumStatus: 'ပရီမီယံအခြေအနေ',
+          activeAccount: 'အသက်ဝင်နေသောအကောင့်',
+          signOut: 'ထွက်ရန်',
         }
       },
     }
